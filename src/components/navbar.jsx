@@ -111,7 +111,7 @@ const Navbar = () => {
                 marginRight: '16px',
               }}
             >
-              LeetClone
+              CodeAnalysis
             </Typography>
             {!isMobile && (
               <Stack direction="row" spacing={2}>
