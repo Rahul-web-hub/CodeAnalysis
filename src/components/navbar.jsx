@@ -30,9 +30,9 @@ const Navbar = () => {
 
   const menuItems = [
     { text: 'Home', href: '/' },
-    { text: 'Explore', href: '/explore' },
-    { text: 'Problems', href: '/problems' },
-    { text: 'Discuss', href: '/discuss' },
+    { text: 'Explore', href: '#' },
+    { text: 'Problems', href: '#' },
+    { text: 'Discuss', href: '#' },
   ];
 
   const drawer = (
