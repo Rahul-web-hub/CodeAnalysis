@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Api from './components/api';
 import Navbar from './components/navbar';
-import WelcomePage from './components/WelcomePage';
 import LoaderHome from "./Loader";
 
 const App = () => {

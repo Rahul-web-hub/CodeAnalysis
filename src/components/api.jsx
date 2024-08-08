@@ -112,7 +112,7 @@ const Api = () => {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/problems/');
+        const response=await fetch(`${import.meta.env.VITE_API_URL}/api/problems/`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
