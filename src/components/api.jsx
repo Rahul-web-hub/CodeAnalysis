@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   AppBar, Toolbar, Typography, Container, TextField, Select, MenuItem,
   FormControl, InputLabel, Grid, CircularProgress, Box, Chip, Avatar,
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+  TablePagination
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Navbar from './navbar';
 import LeetCodeChart from './StatsChart';
+import { useDebounce } from 'use-debounce';
 
 // LeetCode-inspired theme
 const leetCodeTheme = createTheme({
@@ -29,74 +31,84 @@ const leetCodeTheme = createTheme({
   },
 });
 
-const ProblemList = ({ problems }) => (
-  <TableContainer component={Paper} sx={{ marginTop: '20px', backgroundColor: 'background.paper', color: 'text.primary' }}>
-    <Table sx={{ minWidth: 650 }}>
-      <TableHead>
-        <TableRow>
-          <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>ID</TableCell>
-          <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Title</TableCell>
-          <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Difficulty</TableCell>
-          <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Company</TableCell>
-          <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Description</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {problems.map((problem) => (
-          <TableRow
-            key={problem.id}
-            sx={{
-              '&:last-child td, &:last-child th': { border: 0 },
-              '&:hover': {
-                backgroundColor: 'rgba(255, 161, 22, 0.08)',
-                cursor: 'pointer',
-              },
-            }}
-            onClick={() => window.open(problem.leetcode_link, '_blank')}
-          >
-            <TableCell>
-              <Chip
-                label={problem.id}
-                size="small"
-                sx={{
-                  backgroundColor: 'background.paper',
-                  color: 'text.primary',
-                  border: '1px solid',
-                  borderColor: 'text.secondary'
-                }}
-              />
-            </TableCell>
-            <TableCell sx={{ color: 'primary.main', fontWeight: 'medium' }}>{problem.title}</TableCell>
-            <TableCell>
-              <Chip
-                label={problem.difficulty}
-                size="small"
-                sx={{
-                  backgroundColor:
-                    problem.difficulty === 'Easy' ? '#00b8a3' :
-                    problem.difficulty === 'Medium' ? '#ffc01e' : '#ff375f',
-                  color: '#ffffff',
-                }}
-              />
-            </TableCell>
-            <TableCell>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar
-                  src={`/logos/${problem.company.toLowerCase()}.png`}
-                  alt={problem.company}
-                  sx={{ width: 24, height: 24, marginRight: '8px' }}
-                />
-                <Typography variant="body2" sx={{ color: 'text.primary' }}>
-                  {problem.company}
-                </Typography>
-              </Box>
-            </TableCell>
-            <TableCell sx={{ color: 'text.secondary' }}>{problem.description}</TableCell>
+const ProblemList = ({ problems, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage }) => (
+  <>
+    <TableContainer component={Paper} sx={{ marginTop: '20px', backgroundColor: 'background.paper', color: 'text.primary' }}>
+      <Table sx={{ minWidth: 650 }}>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>ID</TableCell>
+            <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Title</TableCell>
+            <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Difficulty</TableCell>
+            <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Company</TableCell>
+            <TableCell sx={{ color: 'primary.main', fontWeight: 'bold' }}>Description</TableCell>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </TableContainer>
+        </TableHead>
+        <TableBody>
+          {problems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((problem) => (
+            <TableRow
+              key={problem.id}
+              sx={{
+                '&:last-child td, &:last-child th': { border: 0 },
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 161, 22, 0.08)',
+                  cursor: 'pointer',
+                },
+              }}
+              onClick={() => window.open(problem.leetcode_link, '_blank')}
+            >
+              <TableCell>
+                <Chip
+                  label={problem.id}
+                  size="small"
+                  sx={{
+                    backgroundColor: 'background.paper',
+                    color: 'text.primary',
+                    border: '1px solid',
+                    borderColor: 'text.secondary',
+                  }}
+                />
+              </TableCell>
+              <TableCell sx={{ color: 'primary.main', fontWeight: 'medium' }}>{problem.title}</TableCell>
+              <TableCell>
+                <Chip
+                  label={problem.difficulty}
+                  size="small"
+                  sx={{
+                    backgroundColor:
+                      problem.difficulty === 'Easy' ? '#00b8a3' :
+                      problem.difficulty === 'Medium' ? '#ffc01e' : '#ff375f',
+                    color: '#ffffff',
+                  }}
+                />
+              </TableCell>
+              <TableCell>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar
+                    src={`/logos/${problem.company.toLowerCase()}.png`}
+                    alt={problem.company}
+                    sx={{ width: 24, height: 24, marginRight: '8px' }}
+                  />
+                  <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                    {problem.company}
+                  </Typography>
+                </Box>
+              </TableCell>
+              <TableCell sx={{ color: 'text.secondary' }}>{problem.description}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <TablePagination
+      component="div"
+      count={problems.length}
+      page={page}
+      onPageChange={handleChangePage}
+      rowsPerPage={rowsPerPage}
+      onRowsPerPageChange={handleChangeRowsPerPage}
+    />
+  </>
 );
 
 const Api = () => {
@@ -108,11 +120,14 @@ const Api = () => {
   const [difficultyFilter, setDifficultyFilter] = useState('');
   const [companyFilter, setCompanyFilter] = useState('');
   const [companies, setCompanies] = useState([]);
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(15);
 
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        const response=await fetch(`${import.meta.env.VITE_API_URL}/api/problems/`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/problems/`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -131,15 +146,23 @@ const Api = () => {
     fetchProblems();
   }, []);
 
-  useEffect(() => {
-    const filtered = problems.filter((problem) => {
-      const matchesSearch = problem.title.toLowerCase().includes(searchTerm.toLowerCase());
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 20));
+    setPage(0); // Reset to the first page when changing rows per page
+  };
+
+  const filteredProblemsMemo = useMemo(() => {
+    return problems.filter((problem) => {
+      const matchesSearch = problem.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
       const matchesDifficulty = !difficultyFilter || problem.difficulty === difficultyFilter;
       const matchesCompany = !companyFilter || problem.company === companyFilter;
       return matchesSearch && matchesDifficulty && matchesCompany;
     });
-    setFilteredProblems(filtered);
-  }, [searchTerm, difficultyFilter, companyFilter, problems]);
+  }, [debouncedSearchTerm, difficultyFilter, companyFilter, problems]);
 
   return (
     <ThemeProvider theme={leetCodeTheme}>
@@ -244,8 +267,14 @@ const Api = () => {
             <Typography color="error" sx={{ mt: 4 }}>{error}</Typography>
           ) : (
             <>
-            <LeetCodeChart problems={problems} />
-            <ProblemList problems={filteredProblems} />
+              <LeetCodeChart problems={problems} />
+              <ProblemList 
+                problems={filteredProblemsMemo}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                handleChangePage={handleChangePage}
+                handleChangeRowsPerPage={handleChangeRowsPerPage}
+              />
             </>
           )}
         </Container>
