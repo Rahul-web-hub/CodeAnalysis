@@ -69,7 +69,6 @@
   .loading-container .loading-words h2 {
     margin: 0;
     padding: 0;
-    color: #000;
     font-family: 'Inter', sans-serif;
     padding-left: 0.6em;
     white-space: nowrap;
@@ -83,8 +82,7 @@
   
     text-align: center;
     text-transform: uppercase;
-  
-    color:#000;
+    color:#e4d2d2;
   }
   
   .loading-container .loading-words h2.active {
