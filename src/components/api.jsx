@@ -30,7 +30,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useDebounce } from "use-debounce";
 import LeetCodeChart from "./StatsChart";
-import StatusBar from "./StatusBar";
+// import StatusBar from "./StatusBar";
 import { motion } from "framer-motion";
 
 // Restored original LeetCode-inspired theme
@@ -228,11 +228,11 @@ const ProblemList = ({
                   </TableCell>
                   <TableCell sx={{ color: "text.secondary" }}>
                     {problem.description}
-                    <StatusBar
+                    {/* <StatusBar
                       problem={problem}
                       onStatusChange={onStatusChange}
                       onClick={(event) => event.stopPropagation()}
-                    />
+                    /> */}
                   </TableCell>
                 </TableRow>
               ))}
