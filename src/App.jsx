@@ -14,7 +14,7 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,7 +22,7 @@ const App = () => {
     }, 6000);
 
     const token = localStorage.getItem('access_token');
-    setIsAuthenticated(!!token);
+    // setIsAuthenticated(!!token);
 
     return () => clearTimeout(timer);
   }, []);
@@ -30,7 +30,7 @@ const App = () => {
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-    setIsAuthenticated(false);
+    // setIsAuthenticated(false);
   };
 
   if (isLoading) return <LoaderHome />;
@@ -38,10 +38,10 @@ const App = () => {
   return (
     <Router>
       <div className="app-container">
-        <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <Navbar  />
         <Routes>
-          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/register" element={<Register />} /> */}
           <Route
             path="/"
             element={

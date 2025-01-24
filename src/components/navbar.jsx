@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
-  Button,
   IconButton,
   Stack,
   Box,
@@ -15,11 +14,9 @@ import {
   Typography,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import LoginIcon from '@mui/icons-material/Login';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { Link as RouterLink } from 'react-router-dom';
 
-const Navbar = ({ isAuthenticated, onLogout }) => {
+const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -59,53 +56,6 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
             </RouterLink>
           </ListItem>
         ))}
-        {isAuthenticated ? (
-          <ListItem disablePadding>
-            <Button
-              onClick={onLogout}
-              sx={{
-                width: '100%',
-                padding: '12px 16px',
-                color: '#f5f5f5',
-                justifyContent: 'left',
-                '&:hover': {
-                  backgroundColor: '#3c3c3c',
-                },
-              }}
-            >
-              Logout
-            </Button>
-          </ListItem>
-        ) : (
-          <>
-            <ListItem disablePadding>
-              <RouterLink
-                to="/login"
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  color: '#f5f5f5',
-                  textDecoration: 'none',
-                }}
-              >
-                Login
-              </RouterLink>
-            </ListItem>
-            <ListItem disablePadding>
-              <RouterLink
-                to="/register"
-                style={{
-                  width: '100%',
-                  padding: '12px 16px',
-                  color: '#f5f5f5',
-                  textDecoration: 'none',
-                }}
-              >
-                Register
-              </RouterLink>
-            </ListItem>
-          </>
-        )}
       </List>
     </Box>
   );
@@ -169,80 +119,6 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                   </RouterLink>
                 ))}
               </Stack>
-            )}
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {isAuthenticated ? (
-              <Button
-                onClick={onLogout}
-                sx={{
-                  color: '#f5f5f5',
-                  bgcolor: '#3c3c3c',
-                  padding: '6px 16px',
-                  borderRadius: '4px',
-                  '&:hover': {
-                    bgcolor: '#4d4d4d',
-                  },
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                startIcon={<ExitToAppIcon />}
-              >
-                Logout
-              </Button>
-            ) : (
-              <>
-                <RouterLink
-                  to="/login"
-                  style={{
-                    color: 'white',
-                    textDecoration: 'none',
-                    marginRight: '8px',
-                  }}
-                >
-                  <Button
-                    sx={{
-                      color: '#282828',
-                      bgcolor: '#ffa116',
-                      borderRadius: '4px',
-                      padding: '8px 16px',
-                      '&:hover': {
-                        bgcolor: '#ffaa29',
-                      },
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                    startIcon={<LoginIcon />}
-                  >
-                    Login
-                  </Button>
-                </RouterLink>
-
-                <RouterLink
-                  to="/register"
-                  style={{
-                    color: 'white',
-                    textDecoration: 'none',
-                  }}
-                >
-                  <Button
-                    sx={{
-                      color: '#ffa116',
-                      borderRadius: '4px',
-                      padding: '8px 16px',
-                      border: '1px solid #ffa116',
-                      '&:hover': {
-                        bgcolor: 'rgba(255, 161, 22, 0.1)',
-                      },
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    Register
-                  </Button>
-                </RouterLink>
-              </>
             )}
           </Box>
         </Toolbar>
