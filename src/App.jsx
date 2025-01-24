@@ -1,34 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
 import Api from './components/api';
+import LoaderHome from './Loader';
+// import CodeReviewAssistant from './components/CodeAssistant';
 import Navbar from './components/navbar';
-import LoaderHome from "./Loader";
+import ExplorePage from './components/Explore';
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem('access_token');
+  return token ? children : <Navigate to="/" />;
+};
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    console.log("App mounted, isLoading:", isLoading);
     const timer = setTimeout(() => {
-      console.log("Timer finished, setting isLoading to false");
       setIsLoading(false);
     }, 6000);
 
-    return () => {
-      console.log("Cleaning up timer");
-      clearTimeout(timer);
-    };
+    const token = localStorage.getItem('access_token');
+    setIsAuthenticated(!!token);
+
+    return () => clearTimeout(timer);
   }, []);
 
-  console.log("Rendering App, isLoading:", isLoading);
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setIsAuthenticated(false);
+  };
 
-  if (isLoading) {
-    return <LoaderHome />;
-  }
+  if (isLoading) return <LoaderHome />;
 
   return (
-      <Api />
+    <Router>
+      <div className="app-container">
+        <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <Routes>
+          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/"
+            element={
+                <Api />
+            }
+          />
+          {/* <Route
+            path="/submit-code"
+            element={
+                <CodeReviewAssistant />  
+            }
+          /> */}
+          <Route
+            path="/explore"
+            element={<ExplorePage/>
+
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

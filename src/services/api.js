@@ -1,21 +1,26 @@
-import axios from 'axios';
+export const submitCode = async (code) => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api2/submit/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ code }),
+  });
 
-const API_URL="http://127.0.0.1:8000/"
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || 'Submission failed');
+  }
 
-export const register =(username,email,password)=>{
-    return axios.post(API_URL +'register/',{username,email,password});
+  return response.json(); // Assuming response includes submission_id
 };
-export const login=(username,password)=>{
-    return axios.post(API_URL+'login/',{username,password});
-}
-export const logout=()=>{
-    return axios.post(API_URL +'logout/',{},{
-        headers:{Authorization:`Token ${localStorage.getItem('token')}`}
-    });
-};
+export const fetchAnalysisResults = async (submissionId) => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api2/results/${submissionId}/`);
 
-export const getCurrentUser=()=>{
-    return axios.get(API_URL+'user/',{
-        headers:{Authorization:`Token ${localStorage.getItem('token')}`}
-    });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || 'Failed to fetch analysis results');
+  }
+
+  return response.json(); // Assuming this returns the analysis results
 };
