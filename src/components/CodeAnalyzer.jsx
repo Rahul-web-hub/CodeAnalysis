@@ -17,7 +17,7 @@ const CodeAnalyzer = () => {
         setAnalysis(null);
     
         try {
-            const response = await fetch("https://code-analysis-backend-3n8lfwdo6-rahulwebhubs-projects.vercel.app/api/analyze-code/", {
+            const response = await fetch(`${import.meta.env.VITE3_API_URL}/api/analyze-code/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code }),
