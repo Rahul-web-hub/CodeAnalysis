@@ -17,12 +17,12 @@ const CodeAnalyzer = () => {
         setAnalysis(null);
     
         try {
-            const response = await fetch(`${import.meta.env.API_URL}/api/analyze-code/`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/analyze-code/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code }),
             });
-            console.log("API URL: ", import.meta.env.API_URL);
+            console.log("API URL: ", import.meta.env.VITE_API_URL);
             const data = await response.json();
     
             if (data.error) {
