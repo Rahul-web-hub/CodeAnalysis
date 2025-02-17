@@ -7,6 +7,7 @@ import LoaderHome from './Loader';
 // import CodeReviewAssistant from './components/CodeAssistant';
 import Navbar from './components/navbar';
 import ExplorePage from './components/Explore';
+import CodeAnalyzer from './components/CodeAnalyzer.jsx';
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem('access_token');
   return token ? children : <Navigate to="/" />;
@@ -45,7 +46,7 @@ const App = () => {
           <Route
             path="/"
             element={
-                <Api />
+                <ExplorePage/>
             }
           />
           {/* <Route
@@ -55,9 +56,14 @@ const App = () => {
             }
           /> */}
           <Route
-            path="/explore"
-            element={<ExplorePage/>
+            path="/code"
+            element={<Api/>
 
+            }
+          />
+           <Route
+            path="/analyze"
+            element={<CodeAnalyzer/>
             }
           />
         </Routes>

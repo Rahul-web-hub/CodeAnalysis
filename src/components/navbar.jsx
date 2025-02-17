@@ -27,7 +27,8 @@ const Navbar = () => {
 
   const menuItems = [
     { text: 'Home', to: '/' },
-    { text: 'Explore', to: '/explore' },
+    { text: 'Code', to: '/code' },
+    { text:'Analyse Code', to:'/analyze'}
   ];
 
   const drawer = (
