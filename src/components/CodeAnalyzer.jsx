@@ -22,7 +22,7 @@ const CodeAnalyzer = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code }),
             });
-    
+            console.log("API URL: ", import.meta.env.VITE_API_URL);
             const data = await response.json();
     
             if (data.error) {
