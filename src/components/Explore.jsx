@@ -20,7 +20,7 @@ import {
   Timer,
   Trophy,
 } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const ExplorePage = () => {
   const [expandedCard, setExpandedCard] = useState(null);
@@ -104,14 +104,15 @@ const ExplorePage = () => {
         <Stack direction="row" spacing={2} justifyContent="center">
           <Button
             component={Link}
-            to={"/code"} // Redirect to /code
+            to={"/code"}
             variant="contained"
             size="large"
             sx={{
               bgcolor: "#FFA116",
               "&:hover": { bgcolor: "#ff8c00" },
-              px: 4,
-              py: 1.5,
+              px: { xs: 2, sm: 4 }, // Smaller padding on phones
+              py: { xs: 1, sm: 1.5 },
+              fontSize: { xs: "0.75rem", sm: "1rem" }, // Smaller text size on phones
               borderRadius: 2,
             }}
           >
@@ -120,13 +121,14 @@ const ExplorePage = () => {
           <Button
             variant="outlined"
             size="large"
-            onClick={scrollToFeatures} // Scroll to features section
+            onClick={scrollToFeatures}
             sx={{
               color: "#fff",
               borderColor: "#fff",
               "&:hover": { borderColor: "#FFA116", color: "#FFA116" },
-              px: 4,
-              py: 1.5,
+              px: { xs: 2, sm: 4 }, // Smaller padding on phones
+              py: { xs: 1, sm: 1.5 },
+              fontSize: { xs: "0.75rem", sm: "1rem" }, // Smaller text size on phones
               borderRadius: 2,
             }}
           >
@@ -209,7 +211,9 @@ const ExplorePage = () => {
       </Box>
 
       {/* Main Features Grid */}
-      <Box ref={featuresRef}> {/* Add ref to this section */}
+      <Box ref={featuresRef}>
+        {" "}
+        {/* Add ref to this section */}
         <Grid container spacing={4}>
           {[
             {
