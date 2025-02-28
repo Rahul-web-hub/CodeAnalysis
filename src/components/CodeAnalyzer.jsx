@@ -61,7 +61,7 @@ const CodeAnalyzer = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white p-6">
+        <div className="min-h-screen bg-gray-900 text-white p-4 sm:p-6">
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center gap-3 mb-6">
                     <Cpu className="text-orange-400" size={32} />
@@ -71,16 +71,15 @@ const CodeAnalyzer = () => {
                 </div>
 
                 <Card className="bg-gray-800 border-gray-700">
-                    <CardContent className="p-6">
+                    <CardContent className="p-4 sm:p-6">
                         <div className="relative mb-6">
                             <textarea
-                                className="w-full h-64 p-4 bg-gray-900 text-white border border-gray-700 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                                className="w-full h-48 sm:h-64 p-4 bg-gray-900 text-white border border-gray-700 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
                                 placeholder="Enter your code here... 
-                                sample code for testing is given here 
                                 "
                                 value={code}
                                 onChange={(e) => setCode(e.target.value)}
-                                 spellCheck={false}
+                                spellCheck={false}
                             />
                             <button
                                 className="absolute bottom-4 right-4 flex items-center gap-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition duration-300 disabled:bg-gray-600"
@@ -94,20 +93,20 @@ const CodeAnalyzer = () => {
 
                         {analysis && !analysis.error && (
                             <Tabs defaultValue="complexity" className="w-full">
-                                <TabsList className="grid grid-cols-4 gap-4 bg-gray-900 p-1">
-                                    <TabsTrigger value="complexity" className="flex items-center gap-2">
+                                <TabsList className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 bg-gray-900 p-1">
+                                    <TabsTrigger value="complexity" className="flex items-center gap-2 text-xs sm:text-sm">
                                         <Timer className="w-4 h-4" />
                                         Complexity
                                     </TabsTrigger>
-                                    <TabsTrigger value="quality" className="flex items-center gap-2">
+                                    <TabsTrigger value="quality" className="flex items-center gap-2 text-xs sm:text-sm">
                                         <CheckCircle className="w-4 h-4" />
                                         Code Quality
                                     </TabsTrigger>
-                                    <TabsTrigger value="optimization" className="flex items-center gap-2">
+                                    <TabsTrigger value="optimization" className="flex items-center gap-2 text-xs sm:text-sm">
                                         <Cpu className="w-4 h-4" />
                                         Optimization
                                     </TabsTrigger>
-                                    <TabsTrigger value="patterns" className="flex items-center gap-2">
+                                    <TabsTrigger value="patterns" className="flex items-center gap-2 text-xs sm:text-sm">
                                         <GitBranch className="w-4 h-4" />
                                         Patterns
                                     </TabsTrigger>
@@ -115,7 +114,7 @@ const CodeAnalyzer = () => {
 
                                 <TabsContent value="complexity" className="mt-4">
                                     <div className="space-y-4">
-                                        <div className="flex gap-4">
+                                        <div className="flex flex-col sm:flex-row gap-4">
                                             <div className="flex-1 p-4 bg-gray-900 rounded-lg">
                                                 <h3 className="text-sm font-medium mb-2">Time Complexity</h3>
                                                 <p className="text-2xl font-bold text-orange-400">{analysis.complexity.time}</p>
