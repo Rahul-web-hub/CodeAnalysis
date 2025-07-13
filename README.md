@@ -11,6 +11,13 @@
 
 ---
 
+
+### 📸 Demo
+
+🔗 **Live**: [https://code-analysis.vercel.app](https://code-analysis.vercel.app)  
+📂 **GitHub**: [https://github.com/Rahul-web-hub/CodeAnalysis](https://github.com/Rahul-web-hub/CodeAnalysis)
+
+
 ## 🚀 Features
 
 ### 💬 Code Review via AI (Dolphin 3.0)
@@ -53,12 +60,6 @@
 
 ---
 
-## 📸 Demo
-
-🔗 **Live**: [https://code-analysis.vercel.app](https://code-analysis.vercel.app)  
-📂 **GitHub**: [https://github.com/Rahul-web-hub/CodeAnalysis](https://github.com/Rahul-web-hub/CodeAnalysis)
-
----
 
 ## 💡 AI Output Example
 
